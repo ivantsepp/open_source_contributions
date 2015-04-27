@@ -1,0 +1,24 @@
+{
+  "name": "open_source_contributions",
+  "version": "0.0.0",
+  "authors": [
+    "Ivan Tse <ivan.tse1@gmail.com>"
+  ],
+  "description": "View open source contributions",
+  "keywords": [
+    "GitHub",
+    "pull requests"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "primer-css": "~2.1.0"
+  }
+}

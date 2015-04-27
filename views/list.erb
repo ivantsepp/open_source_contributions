@@ -1,72 +1,59 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Open Source Contributions</title>
-        <meta name="description" content="See all the open source contributions you've made">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="main.css">
-        <link rel="stylesheet" href="/octicons/octicons.css">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <div class="container">
-          <%= erb :profile %>
-          <div class="column-2">
-            <div class="tabnav">
-              <ul class="tabnav-tabs">
-                <li>
-                  <a href="" class="tabnav-tab selected">
-                    <span class="octicon octicon-diff-added"></span>
-                    Contributions
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <% @sorted_pull_requests.each do |repo, pull_requests| %>
-              <div class="repo-list-item">
-                <div class="repo-list-stats">
-                  <%= repo.language %>
-                  <a class="repo-list-stat-item" href="rails/rails/stargazers">
-                    <span class="octicon octicon-star"></span><%= repo.stargazers_count %>
-                  </a>
-                  <a class="repo-list-stat-item" href="rails/rails/network">
-                    <span class="octicon octicon-git-branch"></span><%= repo.forks %>
-                  </a>
-                </div>
-                <h3 class="repo-list-name">
-                  <a href="<%= repo.html_url %>"><%= repo.full_name %></a>
-                </h3>
-                <p class="repo-list-description"><%= repo.description %></p>
-                <!-- homepage-->
-                <p class="repo-list-meta">
-                  Updated <time datetime="2015-02-05T03:38:25Z">5 hours ago</time>
-                </p>
-                <% pull_requests.each do |pull_request| %>
-                  <div class="table-list-cell issue-title">
-                    <a href="<%= pull_request.html_url %>" class="issue-title-link">
-                      <%= pull_request.title %>
-                    </a>
-                    <div class="issue-meta">
-                      <span class="issue-meta-section opened-by">
-                        #<%= /(\d+)$/.match(pull_request.html_url)[1] %>
-                        merged at
-                        <time datetime="<%= pull_request.closed_at %>">
-                          <%= pull_request.closed_at.strftime("%b %d, %Y") %>
-                        </time>
-                      </span>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
+<div class="column three-fourths contributions-container">
+  <div class="fixed contributions-container__nav">
+    <div class="tabnav">
+      <nav class="tabnav-tabs">
+        <a href="#" class="tabnav-tab selected">
+          <span class="octicon octicon-diff-added"></span>
+          Pull Requests
+        </a>
+      </nav>
+    </div>
+  </div>
+  <div class="contributions-container__list">
+    <% @sorted_pull_requests.each do |repo, pull_requests| %>
+      <div class="repo_item">
+        <div class="repo_item__icon">
+          <span class="octicon mega-octicon <%= repo_icon_for(repo, @user) %>"></span>
         </div>
-    </body>
-</html>
+        <div class="repo_item__stats">
+          <span class="repo_item__stat-item"><%= repo.language %></span>
+          <a class="repo_item__stat-item" href="<%= repo.html_url %>/stargazers">
+            <span class="tooltipped tooltipped-s" aria-label="Stargazers">
+              <span class="octicon octicon-star"></span>
+              <%= repo.stargazers_count %>
+            </span>
+          </a>
+          <a class="repo_item__stat-item" href="<%= repo.html_url %>/network">
+            <span class="tooltipped tooltipped-s" aria-label="Forks">
+              <span class="octicon octicon-git-branch"></span>
+              <%= repo.forks %>
+            </span>
+          </a>
+        </div>
+        <h2 class="repo_item__name">
+          <a href="<%= repo.html_url %>"><%= repo.full_name %></a>
+        </h2>
+        <p class="text-muted repo_item__updated-at">
+          <small>Updated <time datetime="<%= repo.pushed_at %>"><%= time_ago_in_words(repo.pushed_at) %></time></small>
+        </p>
+        <p class="repo_item__description"><%= CGI::escapeHTML repo.description %></p>
+        <% pull_requests.each do |pull_request| %>
+          <div class="pull-request-container">
+            <a href="<%= pull_request.html_url %>" class="pull-request-container__link">
+              <%= pull_request.title %>
+            </a>
+            <div class="issue-meta">
+              <span class="text-muted">
+                #<%= pull_request.number %>
+                merged at
+                <time datetime="<%= pull_request.closed_at %>">
+                  <%= pull_request.closed_at.strftime("%b %d, %Y") %>
+                </time>
+              </span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

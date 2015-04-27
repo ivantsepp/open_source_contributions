@@ -1,35 +1,50 @@
-<div class="column-1">
-  <a href="<%= @user.url %>">
+<div class="column one-fourth fixed profile">
+  <a href="<%= @user.html_url %>">
     <img alt="Profile Picture" class="avatar" height="230" src="<%= @user.avatar_url %>" width="230">
   </a>
-  <h1 class="vcard-names">
-    <span class="vcard-fullname"><%= @user.name %></span>
-    <span class="vcard-username"><%= @user.login %></span>
-  </h1>
-  <ul class="vcard-details">
-    <li class="vcard-detail">
-      <span class="octicon octicon-organization"></span><%= @user.company %>
-    </li>
-    <li class="vcard-detail">
-      <span class="octicon octicon-link"></span><a href="<%= @user.blog %>" class="url" rel="nofollow me"><%= @user.blog %></a>
-    </li>
-    <li class="vcard-detail">
+  <div class="profile__full-name"><%= @user.name %></div>
+  <div class="profile__username"><%= @user.login %></div>
+  <ul class="profile__section">
+    <% if !@user.company.to_s.empty? %>
+      <li class="profile__detail">
+        <span class="octicon octicon-organization"></span>
+        <span><%= @user.company %></span>
+      </li>
+    <% end %>
+    <% if !@user.blog.to_s.empty? %>
+      <li class="profile__detail">
+        <span class="octicon octicon-link"></span>
+        <span><a href="<%= @user.blog %>" rel="nofollow me"><%= @user.blog %></a></span>
+      </li>
+    <% end %>
+    <% if !@user.location.to_s.empty? %>
+      <li class="profile__detail">
+        <span class="octicon octicon-location"></span>
+        <span><%= @user.location %></span>
+      </li>
+    <% end %>
+    <% if !@user.email.to_s.empty? %>
+      <li class="profile__detail">
+        <span class="octicon octicon-mail"></span>
+        <span><a href="mailto:<%= @user.email %>"><%= @user.email %></a></span>
+      </li>
+    <% end %>
+    <li class="profile__detail">
       <span class="octicon octicon-clock"></span>
-      <span>Joined on </span>
-      <time datetime="<%= @user.created_at %>"><%= @user.created_at.strftime("%b %d, %Y") %></time>
+      <span>Joined on <time datetime="<%= @user.created_at %>"><%= @user.created_at.strftime("%b %d, %Y") %></time></span>
     </li>
   </ul>
-  <div class="vcard-stats">
-    <a class="vcard-stat" href="<%= @user.followers_url %>">
-      <strong class="vcard-stat-count"><%= @user.followers %></strong>
+  <div class="profile__section">
+    <a class="profile__stat" href="https://github.com/<%= @user.login %>/followers">
+      <strong class="profile__stat-count"><%= @user.followers %></strong>
       <span class="text-muted">Followers</span>
     </a>
-    <a class="vcard-stat" href="<%= @user.gists_url.gsub(/\{.*\}/, '') %>">
-      <strong class="vcard-stat-count"><%= @user.public_gists %></strong>
+    <a class="profile__stat" href="https://gist.github.com/<%= @user.login %>">
+      <strong class="profile__stat-count"><%= @user.public_gists %></strong>
       <span class="text-muted">Gists</span>
     </a>
-    <a class="vcard-stat" href="<%= @user.following_url.gsub(/\{.*\}/, '') %>">
-      <strong class="vcard-stat-count"><%= @user.following %></strong>
+    <a class="profile__stat" href="https://github.com/<%= @user.login %>/following">
+      <strong class="profile__stat-count"><%= @user.following %></strong>
       <span class="text-muted">Following</span>
     </a>
   </div>

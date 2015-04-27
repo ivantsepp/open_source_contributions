@@ -1,2 +1,7 @@
 test.txt
 user.txt
+public/main.css
+public/main.css.map
+public/octicons/**
+.sass-cache
+node_modules/**
