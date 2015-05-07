@@ -32,6 +32,6 @@
     "commit": "14ab7c362b76bd066ccf37e126bf4e34a9fcde74"
   },
   "_source": "git://github.com/github/octicons.git",
-  "_target": "*",
+  "_target": "~2.2.0",
   "_originalSource": "octicons"
 }

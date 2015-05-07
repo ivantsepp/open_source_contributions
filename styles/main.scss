@@ -19,6 +19,17 @@
   width: 100%;
   z-index: 1;
 }
+.search-bar__counter {
+  border-right: 1px solid #d5d5d5;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px 10px 5px 0;
+  padding: 2px 5px 2px 0;
+}
+
+.search-bar__counter--last {
+  border: 0;
+}
 
 .main-content {
   margin-top: 55px;

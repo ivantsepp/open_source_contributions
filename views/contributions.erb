@@ -1,22 +1,5 @@
-<div class="search-bar-container">
-  <div class="search-bar">
-    <div class="container">
-      <div class="columns">
-        <div class="column three-fourths">
-          <input class="input-block" type="text" placeholder="Search for a GitHub username (ex: ivantsepp)">
-        </div>
-        <div class="column one-fourth">
-          <button class="btn" type="submit">Search</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="main-content">
-  <div class="container">
-    <div class="columns">
-      <%= erb :profile %>
-      <%= erb :list %>
-    </div>
-  </div>
-</div>
+<div id="react-contributions"></div>
+<script type="text/javascript">
+  // Need to escape this!
+  var username = '<%= @user %>';
+</script>

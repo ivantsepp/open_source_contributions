@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'octokit'
+require 'sinatra/auth/github'
 
 Octokit.auto_paginate = true
 
@@ -14,6 +15,17 @@ configure do
   set :repos, {}
   set :client, Octokit::Client.new
 end
+
+enable :sessions
+set :session_secret, ENV['SESSION_SECRET']
+
+set :github_options, {
+  :scopes    => "user:email",
+  :secret    => ENV['GITHUB_CLIENT_SECRET'],
+  :client_id => ENV['GITHUB_CLIENT_ID'],
+}
+
+register Sinatra::Auth::Github
 
 module Helpers
   def repo_string(url)
@@ -55,20 +67,76 @@ end
 
 helpers Helpers
 
-get '/test' do
-  @sorted_pull_requests = Marshal.load(File.read('./test.txt'))
-  @user = Marshal.load(File.read('./user.txt'))
-  erb :contributions, :layout => :layout
+get '/api/login' do
+  content_type :json
+  if github_user
+    github_user.attribs.to_json
+  else
+    status 401
+  end
+end
+
+# get '/api/logout' do
+#   logout!
+#   status 200
+#   body ''
+# end
+
+get '/login' do
+  authenticate!
+  redirect to('/')
+end
+
+get '/logout' do
+  logout!
+  redirect to('/')
+end
+
+get '/api/users/:user' do
+  content_type :json
+  github_user.api.user(params[:user]).to_attrs.to_json
+end
+
+get '/api/search/issues' do
+  content_type :json
+  github_user.api.search_issues(params[:q], :per_page => params[:per_page]).to_attrs.to_json
+end
+
+get '/api/rate_limit' do
+  content_type :json
+  # require 'pry'; binding.pry
+  github_user.api.rate_limit.to_h.to_json
+end
+
+get '/api/repos/:owner/:repo' do
+  content_type :json
+  repo = "#{params[:owner]}/#{params[:repo]}"
+  github_user.api.repository(repo).to_attrs.to_json
+end
+
+# get '/test' do
+#   @user = params[:user]
+#   @user = 'ivantsepp'
+#   # @sorted_pull_requests = Marshal.load(File.read('./test.txt'))
+#   # @user = Marshal.load(File.read('./user.txt'))
+#   erb :contributions, :layout => :layout
+# end
+
+get '/about/example' do
+  @user = 'ivantsepp'
+  erb :example, :layout => :layout
 end
 
 get '/:user' do
-  user = params[:user]
-  @user = settings.client.user(user)
-  results = settings.client.search_issues "author:#{user} type:pr is:merged"
-  pull_requests = results.items.group_by do |pr|
-    repository(pr.url)
-  end
-  public_pull_requests = pull_requests.select { |repo| !repo.private? }.to_a
-  @sorted_pull_requests = public_pull_requests.sort_by { |p| -repo_rating(p[0]) }
+  # user = params[:user]
+  # @user = settings.client.user(user)
+  # results = settings.client.search_issues "author:#{user} type:pr is:merged"
+  # pull_requests = results.items.group_by do |pr|
+  #   repository(pr.url)
+  # end
+  # public_pull_requests = pull_requests.select { |repo| !repo.private? }.to_a
+  # @sorted_pull_requests = public_pull_requests.sort_by { |p| -repo_rating(p[0]) }
+  @user = params[:user]
   erb :contributions, :layout => :layout
 end
+

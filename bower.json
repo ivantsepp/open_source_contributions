@@ -19,6 +19,7 @@
     "tests"
   ],
   "dependencies": {
-    "primer-css": "~2.1.0"
+    "primer-css": "~2.1.0",
+    "octicons": "~2.2.0"
   }
 }
