@@ -11,12 +11,18 @@ var PullRequestsList = React.createClass({
     };
   },
   componentWillMount: function() {
+    var reposToShow;
     if (this.props.pullRequests){
       var pullRequestsByRepo = _.groupBy(this.props.pullRequests, function(pullRequest){
         return /repos\/([^\/]*\/[^\/]*)/.exec(pullRequest.url)[1];
       });
       this.setState({pullRequestsByRepo: pullRequestsByRepo});
-      this.populateRepoInfo(_.keys(pullRequestsByRepo));
+      if (this.props.loggedIn){
+        reposToShow = _.keys(pullRequestsByRepo);
+      } else {
+        reposToShow = _.first(_.keys(pullRequestsByRepo), 10);
+      }
+      this.populateRepoInfo(reposToShow);
     }
   },
   populateRepoInfo: function(repos){
@@ -54,7 +60,7 @@ var PullRequestsList = React.createClass({
     );
   },
   reposByRating: function(){
-    return _.sortBy(_.keys(this.state.pullRequestsByRepo), function(name){
+    return _.sortBy(_.keys(this.state.repoInfoHash), function(name){
       var repoInfo = this.state.repoInfoHash[name];
       return (repoInfo.forks_count + repoInfo.subscribers_count + repoInfo.stargazers_count) * -1;
     }, this);
@@ -64,8 +70,7 @@ var PullRequestsList = React.createClass({
       return;
     }
     var self = this, nodes = [];
-    var reposToShow = _.first(this.reposByRating(), 10);
-    _.each(reposToShow, function(repo){
+    _.each(this.reposByRating(), function(repo){
       var pullRequests = self.state.pullRequestsByRepo[repo];
       nodes.push(
         <RepoInfo key={repo} pullRequests={pullRequests} repo={self.state.repoInfoHash[repo]} user={self.props.user} />

@@ -61,7 +61,8 @@ var Contributions = React.createClass({
         pullRequests={this.state.pullRequests}
         user={this.state.user}
         repoInfoHash={this.props.repoInfoHash}
-        baseUrl={this.props.baseUrl} />
+        baseUrl={this.props.baseUrl}
+        loggedIn={this.props.loggedIn} />
     );
   },
   render: function(){
