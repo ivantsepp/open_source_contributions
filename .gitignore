@@ -4,3 +4,4 @@ user.txt
 node_modules/**
 js/build.js
 public/**
+vendor/bundle
