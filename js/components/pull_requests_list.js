@@ -79,13 +79,32 @@ var PullRequestsList = React.createClass({
 
     return nodes;
   },
+  noPullRequestsNode: function(){
+    return (
+      <div className="blankslate spacious contributions-container__empty-list">
+        <span className="mega-octicon octicon-git-commit"></span>
+        <span className="mega-octicon octicon-tag"></span>
+        <span className="mega-octicon octicon-git-branch"></span>
+        <h3>Could not find any open source pull requests</h3>
+        <p>
+          Contribute to open source by creating pull requests! You can
+          <a href="https://github.com/explore"> explore GitHub</a> to find an interesting project.
+        </p>
+      </div>
+    )
+  },
+  pullRequestsNode: function(){
+    return (
+      <div className="contributions-container__list">
+        {this.repoInfoNodes()}
+      </div>
+    );
+  },
   render: function(){
     return (
       <div className="column three-fourths contributions-container">
         {this.tabNode()}
-        <div className="contributions-container__list">
-          {this.repoInfoNodes()}
-        </div>
+        {this.props.pullRequests.length ? this.pullRequestsNode() : this.noPullRequestsNode()}
       </div>
     );
   }

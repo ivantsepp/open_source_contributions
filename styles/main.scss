@@ -35,6 +35,17 @@
   width: 100%;
   z-index: 1;
 }
+
+.search-bar__search-input {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% - 50px);
+}
+
+.search-bar__logo {
+  color: $brand-gray-dark;
+}
+
 .search-bar__counter {
   border-right: 1px solid #d5d5d5;
   cursor: pointer;
@@ -112,7 +123,8 @@
   margin-left: 25%;
 }
 
-.contributions-container__list {
+.contributions-container__list,
+.contributions-container__empty-list {
   margin-top: 60px;
 }
 

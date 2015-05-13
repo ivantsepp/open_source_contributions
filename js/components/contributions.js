@@ -33,7 +33,7 @@ var Contributions = React.createClass({
     if (this.state.pullRequests){
       return;
     }
-    var url = this.props.baseUrl + "/search/issues?" + "&q=author:" + this.props.username + "+type:pr+is:merged+is:public&per_page=100";
+    var url = this.props.baseUrl + "/search/issues?" + "q=author:" + this.props.username + "+type:pr+is:merged+is:public&per_page=100";
     this.getPullRequestsByUrl(url);
   },
   getPullRequestsByUrl: function(url){

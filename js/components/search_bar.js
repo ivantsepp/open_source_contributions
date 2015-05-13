@@ -46,8 +46,9 @@ var SearchBar = React.createClass({
           <div className="container">
             <div className="columns">
               <div className="column one-half">
+                <a className="search-bar__logo" href="/"><span className="mega-octicon octicon-terminal"></span></a>
                 <input
-                  className="input-block"
+                  className="right search-bar__search-input"
                   type="text"
                   placeholder="Search for a GitHub username (ex: ivantsepp)"
                   onChange={this.handleChange}
