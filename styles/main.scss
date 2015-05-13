@@ -50,6 +50,7 @@
 .main-content {
   margin-top: 55px;
   padding-top: 20px;
+  position: relative;
 }
 
 .profile {
@@ -184,4 +185,18 @@
   color: #333 !important;
   line-height: 1.2;
   word-break: break-word;
+}
+
+.not-found__icon {
+  font-size: 100px;
+}
+
+.not-found__message {
+  position: relative;
+  top: calc(50% - 110px);
+}
+
+.not-found__container {
+  height: calc(100vh - 75px);
+  text-align: center;
 }

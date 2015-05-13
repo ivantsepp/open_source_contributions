@@ -9,11 +9,11 @@ var Contributions = React.createClass({
     return {
       user: this.props.user,
       pullRequests: this.props.pullRequests,
+      notFound: false
     };
   },
   componentWillMount: function() {
     this.getUserInfo();
-    this.getPullRequests();
   },
   getUserInfo: function(){
     if (this.state.user){
@@ -21,7 +21,12 @@ var Contributions = React.createClass({
     }
 
     $.getJSON(this.props.baseUrl + "/users/" + this.props.username, function(data){
-      this.setState({user: data});
+      if (data.message === "Not Found"){
+        this.setState({notFound: true});
+      } else {
+        this.setState({user: data});
+        this.getPullRequests();
+      }
     }.bind(this));
   },
   getPullRequests: function(){
@@ -65,6 +70,24 @@ var Contributions = React.createClass({
         loggedIn={this.props.loggedIn} />
     );
   },
+  userFoundNode: function(){
+    return (
+      <div className="columns">
+        {this.profileNode()}
+        {this.pullRequestsListNode()}
+      </div>
+    )
+  },
+  userNotFoundNode: function(){
+    return (
+      <div className="columns not-found__container">
+        <div className="two-thirds column centered flash flash-warn not-found__message">
+          <span className="mega-octicon octicon-question not-found__icon"></span>
+          <h2>Username not found</h2>
+        </div>
+      </div>
+    )
+  },
   render: function(){
 
     return (
@@ -72,10 +95,7 @@ var Contributions = React.createClass({
         <SearchBar loggedIn={this.props.loggedIn} baseUrl={this.props.baseUrl} />
         <div className="main-content">
           <div className="container">
-            <div className="columns">
-              {this.profileNode()}
-              {this.pullRequestsListNode()}
-            </div>
+            {this.state.notFound ? this.userNotFoundNode() : this.userFoundNode() }
           </div>
         </div>
       </div>
