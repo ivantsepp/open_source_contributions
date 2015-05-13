@@ -1,0 +1,23 @@
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $('.js-index-search').keypress(function (e) {
+      if (e.which == 13) {
+        window.location.href = "/" + $(this).val();
+      }
+    });
+  </script>
+<% end %>
+
+
+<div class="container">
+  <div class="columns">
+    <div class="two-thirds column centered index__container">
+      <span class="mega-octicon octicon-terminal index__logo"></span>
+      <h1 class="index__logo-text">Open Source Contributions</h1>
+      <p class="lead">
+        Showcase the pull requests, issues, and commits that you've contributed to in the open source community.
+      </p>
+      <input class="input-large input-block js-index-search" type="text" placeholder="Search for a GitHub username (ex: ivantsepp)">
+    </div>
+  </div>
+</div>

@@ -4,6 +4,22 @@
   position: fixed;
 }
 
+.index__container {
+  padding-top: 100px;
+  text-align: center;
+}
+
+.index__logo {
+  display: inline-block;
+  font-size: 100px;
+}
+
+.index__logo-text {
+  display: inline-block;
+  margin-left: 15px;
+  vertical-align: text-bottom;
+}
+
 .search-bar {
   background-color: #f5f5f5;
   border-bottom: 1px solid #e5e5e5;

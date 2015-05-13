@@ -1,5 +1,8 @@
 <div id="react-contributions"></div>
-<script type="text/javascript">
-  // Need to escape this!
-  var username = '<%= @user %>';
-</script>
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    // Need to escape this!
+    var username = '<%= @user %>';
+  </script>
+  <script type="text/javascript" src="/main.js"></script>
+<% end %>

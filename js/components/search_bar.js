@@ -12,7 +12,7 @@ var SearchBar = React.createClass({
   handleChange: function(event) {
     this.setState({search: event.target.value});
   },
-  handleClick: function(){
+  search: function(){
     window.location.href = "/" + this.state.search;
   },
   componentWillMount: function() {
@@ -34,6 +34,11 @@ var SearchBar = React.createClass({
   logOut: function(){
     window.location.href = "/logout";
   },
+  handleKeyPress: function(event){
+    if (event.which === 13 ) {
+      this.search();
+    }
+  },
   render: function(){
     return (
       <div className="search-bar-container">
@@ -45,10 +50,11 @@ var SearchBar = React.createClass({
                   className="input-block"
                   type="text"
                   placeholder="Search for a GitHub username (ex: ivantsepp)"
-                  onChange={this.handleChange} />
+                  onChange={this.handleChange}
+                  onKeyPress={this.handleKeyPress} />
               </div>
               <div className="column one-half">
-                <button className="btn" type="submit" onClick={this.handleClick}>Search</button>
+                <button className="btn" type="submit" onClick={this.search}><span className="octicon octicon-search"></span> Search</button>
                 <div className="right">
                   <span
                     className="search-bar__counter tooltipped tooltipped-s"
@@ -64,8 +70,8 @@ var SearchBar = React.createClass({
                       Search: <span className="counter">{this.state.searchRemaining}</span>
                     </span> : null}
                   {loggedIn ?
-                     <button type="button" className="btn" onClick={this.logOut}>Log Out</button> :
-                     <button type="button" className="btn btn-primary" onClick={this.signIn}>Sign In</button>}
+                     <button type="button" className="btn" onClick={this.logOut}><span className="octicon octicon-sign-out"></span> Log Out</button> :
+                     <button type="button" className="btn btn-primary" onClick={this.signIn}><span className="octicon octicon-sign-in"></span> Sign In</button>}
                 </div>
               </div>
             </div>

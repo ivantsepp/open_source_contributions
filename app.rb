@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'octokit'
 require 'sinatra/auth/github'
+require 'sinatra/content_for'
+require 'sinatra/json'
 
 Octokit.auto_paginate = true
 
@@ -93,25 +95,20 @@ get '/logout' do
 end
 
 get '/api/users/:user' do
-  content_type :json
-  github_user.api.user(params[:user]).to_attrs.to_json
+  json github_user.api.user(params[:user]).to_attrs
 end
 
 get '/api/search/issues' do
-  content_type :json
-  github_user.api.search_issues(params[:q], :per_page => params[:per_page]).to_attrs.to_json
+  json github_user.api.search_issues(params[:q], :per_page => params[:per_page]).to_attrs
 end
 
 get '/api/rate_limit' do
-  content_type :json
-  # require 'pry'; binding.pry
-  github_user.api.rate_limit.to_h.to_json
+  json github_user.api.rate_limit.to_h
 end
 
 get '/api/repos/:owner/:repo' do
-  content_type :json
   repo = "#{params[:owner]}/#{params[:repo]}"
-  github_user.api.repository(repo).to_attrs.to_json
+  json github_user.api.repository(repo).to_attrs
 end
 
 # get '/test' do
@@ -140,3 +137,6 @@ get '/:user' do
   erb :contributions, :layout => :layout
 end
 
+get '/' do
+  erb :index, :layout => :layout
+end
