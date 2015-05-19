@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-autoprefixer');
 
   grunt.initConfig({
     copy: {
@@ -35,7 +36,7 @@ module.exports = function(grunt) {
     watch: {
       css: {
         files: 'styles/*.scss',
-        tasks: ['sass:dev']
+        tasks: ['sass:dev', 'autoprefixer']
       },
       js: {
         files: ['js/components/**/*.js', 'js/main.js'],
@@ -58,14 +59,19 @@ module.exports = function(grunt) {
       },
     },
     uglify: {
-        my_target: {
-          files: {
-            'public/main.min.js': ['public/main.js']
-          }
+      my_target: {
+        files: {
+          'public/main.min.js': ['public/main.js']
         }
       }
+    },
+    autoprefixer: {
+      main: {
+        src: 'public/main.css'
+      },
+    }
   });
 
   grunt.registerTask('default', ['copy', 'watch']);
-  grunt.registerTask('deploy', ['sass:dist', 'copy', 'browserify', 'concat', 'uglify']);
+  grunt.registerTask('deploy', ['sass:dist', 'copy', 'browserify', 'concat', 'uglify', 'autoprefixer']);
 };

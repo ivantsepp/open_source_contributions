@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react/addons');
 var RepoInfo = require('./repo_info');
+var Loading = require('./loading');
 
 var PullRequestsList = React.createClass({
   getInitialState: function() {
@@ -41,7 +42,6 @@ var PullRequestsList = React.createClass({
     });
 
     Promise.all(promises).then(function(){
-
       self.setState({isLoading: false});
     });
   },
@@ -100,11 +100,14 @@ var PullRequestsList = React.createClass({
       </div>
     );
   },
+  loadedNode: function(){
+    return this.props.pullRequests.length ? this.pullRequestsNode() : this.noPullRequestsNode();
+  },
   render: function(){
     return (
       <div className="column three-fourths contributions-container">
         {this.tabNode()}
-        {this.props.pullRequests.length ? this.pullRequestsNode() : this.noPullRequestsNode()}
+        {this.state.isLoading ? <Loading /> : this.loadedNode()}
       </div>
     );
   }

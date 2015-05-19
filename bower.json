@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "primer-css": "~2.1.0",
-    "octicons": "~2.2.0"
+    "octicons": "~2.2.0",
+    "spinkit": "~1.0.1"
   }
 }

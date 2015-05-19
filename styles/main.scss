@@ -1,4 +1,5 @@
 @import "../bower_components/primer-css/scss/primer";
+@import "../bower_components/spinkit/scss/spinners/7-three-bounce.scss";
 
 .fixed {
   position: fixed;
@@ -211,4 +212,10 @@
 .not-found__container {
   height: calc(100vh - 75px);
   text-align: center;
+}
+
+.sk-spinner-three-bounce.sk-spinner.loading-container {
+  margin: 0;
+  margin-left: 145px;
+  padding-top: 100px;
 }
